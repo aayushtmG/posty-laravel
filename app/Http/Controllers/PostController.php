@@ -11,12 +11,11 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth');
+        $this->middleware('auth');
     }
     public function index(){
     //    $posts = Post::orderBy('created_at','desc')->with(['user','likes'])->paginate(5); 
        $posts = Post::latest()->with(['user','likes'])->paginate(5); 
-
         return view('post',[
             'posts'=> $posts
         ]);
@@ -42,6 +41,7 @@ class PostController extends Controller
     }
 
     public function destroy(Post $post,Request $request){
+       $this->authorize("delete",$post);
         $post->delete();
         return back();
     }

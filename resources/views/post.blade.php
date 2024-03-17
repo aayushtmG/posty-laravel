@@ -40,7 +40,7 @@
       @endif
       </div>
       @endauth
-      @if($post->ownedBy(auth()->user()))
+      @can('delete',$post)
         <div>
           <form action="{{ route('post.delete',$post) }}" method="post">
             @csrf
@@ -48,7 +48,7 @@
             <button class="rounded-lg my-2 px-4 hover:bg-red-600 bg-red-500 text-white" type="submit">Delete</button>
           </form>
         </div>
-        @endif
+        @endcan
   </div>
   @endforeach
 </div>
